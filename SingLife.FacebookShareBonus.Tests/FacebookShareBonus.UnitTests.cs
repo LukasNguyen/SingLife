@@ -43,13 +43,13 @@ namespace SingLife.FacebookShareBonus.Tests
                 return new FacebookBonusCalculationInput { PoliciesOfCustomer = policies, Settings = facebookBonusSettings };
             }
         }
-            //
-            // TODO: Add constructor logic here
-            //
+        //
+        // TODO: Add constructor logic here
+        //
         [Test]
-        public void FacebookBonus_BonusInPointLargerThanMaximumBonus_Total()
+        public void FacebookBonus_BonusInPointLargerThanMaximumBonus_TotalIsCorrect()
         {
-          
+
             FacebookBonusCalculator facebookBonusCalculator = new FacebookBonusCalculator();
             var output = facebookBonusCalculator.Calculate(Initialize.GetListSortingByDate());
 
@@ -61,9 +61,9 @@ namespace SingLife.FacebookShareBonus.Tests
             NUnit.Framework.Assert.AreEqual(expected.Total, output.Total);
         }
         [Test]
-        public void FacebookBonus_BonusInPointSmallerThanMaximumBonus_Total()
+        public void FacebookBonus_BonusInPointSmallerThanMaximumBonus_TotalIsCorrect()
         {
-           
+
             FacebookBonusCalculator facebookBonusCalculator = new FacebookBonusCalculator();
             var output = facebookBonusCalculator.Calculate(Initialize.GetListSortingByDateWithSmallBonusOfPoint());
 
@@ -75,7 +75,7 @@ namespace SingLife.FacebookShareBonus.Tests
             NUnit.Framework.Assert.AreEqual(expected.Total, output.Total);
         }
         [Test]
-        public void FacebookBonus_BonusInPointLargerThanMaximumBonus_ListPolicyBonus()
+        public void FacebookBonus_BonusInPointLargerThanMaximumBonus_ListPolicyBonusEqual()
         {
             FacebookBonusCalculator facebookBonusCalculator = new FacebookBonusCalculator();
             var output = facebookBonusCalculator.Calculate(Initialize.GetListSortingByDate());
@@ -88,7 +88,7 @@ namespace SingLife.FacebookShareBonus.Tests
             NUnit.Framework.Assert.AreEqual(expected.ToString(), output.ToString());
         }
         [Test]
-        public void FacebookBonus_BonusInPointSmallerThanMaximumBonus_ListPolicyBonus()
+        public void FacebookBonus_BonusInPointSmallerThanMaximumBonus_ListPolicyBonusEqual()
         {
             FacebookBonusCalculator facebookBonusCalculator = new FacebookBonusCalculator();
             var output = facebookBonusCalculator.Calculate(Initialize.GetListSortingByDateWithSmallBonusOfPoint());
@@ -101,7 +101,7 @@ namespace SingLife.FacebookShareBonus.Tests
             NUnit.Framework.Assert.AreEqual(expected.ToString(), output.ToString());
         }
         [Test]
-        public void FacebookBonus_ListPolicyNotSortingByDate_ListPolicyBonus()
+        public void FacebookBonus_ListPolicyNotSortingByDate_ListPolicyBonusEqual()
         {
             FacebookBonusCalculator facebookBonusCalculator = new FacebookBonusCalculator();
             var output = facebookBonusCalculator.Calculate(Initialize.GetListNotSortingByDate());
