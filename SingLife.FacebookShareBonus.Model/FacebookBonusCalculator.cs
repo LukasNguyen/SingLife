@@ -25,7 +25,7 @@ namespace SingLife.FacebookShareBonus.Model
 
             List<PolicyBonus> lstPolicyBonuses = new List<PolicyBonus>();
 
-            foreach (var item in lstPolicies)
+            foreach (Policy item in lstPolicies)
             {
                 float bonusInPoints = (float)item.Premium * facebookBonusSetting.BonusPercentage;
                 int bonusInPointsAfterFloor = (int)Math.Floor(bonusInPoints);
@@ -117,6 +117,7 @@ namespace SingLife.FacebookShareBonus.Model
             }
         }
 
+
         public override string ToString()
         {
             string s = "";
@@ -133,12 +134,4 @@ namespace SingLife.FacebookShareBonus.Model
         public string PolicyNumber { get; set; }
         public int BonusInPoints { get; set; }
     }
-
-    //public class MyPolicySort : IPolicySortService
-    //{
-    //    public IEnumerable<Policy> Sort(IEnumerable<Policy> policies)
-    //    {
-    //        return policies.OrderBy(n => n.StartDate);
-    //    }
-    //}
 }
