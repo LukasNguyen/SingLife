@@ -40,7 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FacebookBonus.cs" />
+    <Compile Include="FacebookBonusCalculationInput.cs" />
     <Compile Include="FacebookBonusCalculator.cs" />
+    <Compile Include="IPolicySortService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

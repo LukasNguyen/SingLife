@@ -47,7 +47,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FacebookBonusCalculator_UnitTests.cs" />
+    <Compile Include="FacebookBonusCalculatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
