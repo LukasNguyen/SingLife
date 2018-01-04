@@ -1,6 +1,5 @@
 ﻿using FakeItEasy;
 using NUnit.Framework;
-using SingLife.FacebookShareBonus.Model;
 using System;
 
 namespace SingLife.FacebookShareBonus.Model.UnitTests
@@ -14,7 +13,6 @@ namespace SingLife.FacebookShareBonus.Model.UnitTests
             FacebookBonusCalculator facebookBonusCalculator = new FacebookBonusCalculator();
             var actual = facebookBonusCalculator.Calculate(GetListWithLargerBonusOfPointAndRemainingItemsZeroPoint());
 
-
             const string expected = "P001 P002 P003 10";
 
             Assert.AreEqual(expected, actual.ToString());
@@ -25,7 +23,6 @@ namespace SingLife.FacebookShareBonus.Model.UnitTests
         {
             FacebookBonusCalculator facebookBonusCalculator = new FacebookBonusCalculator();
             var actual = facebookBonusCalculator.Calculate(GetListWithLargerBonusOfPoint());
-
 
             const string expected = "P001 P002 10";
 
@@ -53,9 +50,22 @@ namespace SingLife.FacebookShareBonus.Model.UnitTests
 
             const int expectedTotal = 10;
 
+            Assert.AreEqual(expectedTotal, actual);
+        }
+
+        [Test]
+        public void FacebookBonusCalculator_BonusInPointLargerThanMaximumBonusAndRemainingItemZeroPoint_TotalIsCorrect()
+        {
+            FacebookBonusCalculator facebookBonusCalculator = new FacebookBonusCalculator();
+            FacebookBonus facebookBonus = facebookBonusCalculator.Calculate(GetListWithLargerBonusOfPointAndRemainingItemsZeroPoint());
+
+            int actual = facebookBonus.Total;
+
+            const int expectedTotal = 10;
 
             Assert.AreEqual(expectedTotal, actual);
         }
+
         [Test]
         public void FacebookBonusCalculator_BonusInPointSmallerThanMaximumBonus_TotalIsCorrect()
         {
@@ -87,12 +97,10 @@ namespace SingLife.FacebookShareBonus.Model.UnitTests
                 StartDate = new DateTime(2016, 5, 12)
             };
 
-
             Policy[] policies = new Policy[]
             {
                 policy1,
                 policy2,
-
             };
 
             A.CallTo(() => sorter.Sort(policies)).Returns(policies);
@@ -110,6 +118,7 @@ namespace SingLife.FacebookShareBonus.Model.UnitTests
                 Settings = facebookBonusSettings
             };
         }
+
         private static FacebookBonusCalculationInput GetListWithLargerBonusOfPointAndRemainingItemsZeroPoint()
         {
             IPolicySortService sorter = A.Fake<IPolicySortService>();
@@ -140,7 +149,6 @@ namespace SingLife.FacebookShareBonus.Model.UnitTests
                 policy1,
                 policy2,
                 policy3
-
             };
 
             A.CallTo(() => sorter.Sort(policies)).Returns(policies);
@@ -198,6 +206,5 @@ namespace SingLife.FacebookShareBonus.Model.UnitTests
                 Settings = facebookBonusSettings
             };
         }
-
     }
 }

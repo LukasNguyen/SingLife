@@ -21,9 +21,7 @@ namespace SingLife.FacebookShareBonus.Model
             var facebookBonusSetting = input.Settings;
             int sumBonusInPoints = 0;
 
-            //var lstPolicies = facebookBonusSetting.PolicySorter.Sort(input.PoliciesOfCustomer);
-
-            var lstPolicies = input.PoliciesOfCustomer;
+            var lstPolicies = facebookBonusSetting.PolicySorter.Sort(input.PoliciesOfCustomer);
 
             List<PolicyBonus> lstPolicyBonuses = new List<PolicyBonus>();
 
@@ -46,13 +44,11 @@ namespace SingLife.FacebookShareBonus.Model
                 lstPolicyBonuses.Add(policyBonus);
                 if (sumBonusInPoints > facebookBonusSetting.MaximumBonus)
                 {
-
-
                     policyBonus.BonusInPoints -= (lstPolicyBonuses.Sum(n => n.BonusInPoints) - (int)facebookBonusSetting.MaximumBonus);
 
                     var remainingItem = lstPolicies.Skip(count);
 
-                    if(remainingItem.Any())
+                    if (remainingItem.Any())
                     {
                         foreach (Policy jtem in remainingItem)
                         {
