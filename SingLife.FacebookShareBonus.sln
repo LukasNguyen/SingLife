@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingLife.FacebookShareBonus.Model", "SingLife.FacebookShareBonus.Model\SingLife.FacebookShareBonus.Model.csproj", "{78C71540-52AC-4D08-A24D-0D13582F9284}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingLife.FacebookShareBonus.Model.UnitTests", "SingLife.FacebookShareBonus.Tests\SingLife.FacebookShareBonus.Model.UnitTests.csproj", "{B304E99C-BC34-468F-B333-F43EEA67469B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingLife.FacebookShareBonus.Model.UnitTests", "SingLife.FacebookShareBonus.Model.UnitTests\SingLife.FacebookShareBonus.Model.UnitTests.csproj", "{B304E99C-BC34-468F-B333-F43EEA67469B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -19,23 +19,23 @@ namespace SingLife.FacebookShareBonus.Model
             // TODO: Implement bonus calculation.
 
             var facebookBonusSetting = input.Settings;
-            int sumBonusInPoints = 0;
+            var sumBonusInPoints = 0;
 
             var lstPolicies = facebookBonusSetting.PolicySorter.Sort(input.PoliciesOfCustomer);
 
-            List<PolicyBonus> lstPolicyBonuses = new List<PolicyBonus>();
+            var lstPolicyBonuses = new List<PolicyBonus>();
 
-            int count = 0;
+            var count = 0;
 
             foreach (Policy item in lstPolicies)
             {
                 count++;
-                float bonusInPoints = (float)item.Premium * facebookBonusSetting.BonusPercentage;
-                int bonusInPointsAfterFloor = (int)Math.Floor(bonusInPoints);
+                var bonusInPoints = (float)item.Premium * facebookBonusSetting.BonusPercentage;
+                var bonusInPointsAfterFloor = (int)Math.Floor(bonusInPoints);
 
                 sumBonusInPoints += bonusInPointsAfterFloor;
 
-                PolicyBonus policyBonus = new PolicyBonus
+                var policyBonus = new PolicyBonus
                 {
                     PolicyNumber = item.PolicyNumber,
                     BonusInPoints = bonusInPointsAfterFloor
@@ -46,18 +46,19 @@ namespace SingLife.FacebookShareBonus.Model
                 {
                     policyBonus.BonusInPoints -= (lstPolicyBonuses.Sum(n => n.BonusInPoints) - (int)facebookBonusSetting.MaximumBonus);
 
-                    var remainingItem = lstPolicies.Skip(count);
+                    var remainingItems = lstPolicies.Skip(count);
 
-                    if (remainingItem.Any())
+                    if (remainingItems.Any())
                     {
-                        foreach (Policy jtem in remainingItem)
+                        foreach (Policy jtem in remainingItems)
                         {
-                            PolicyBonus policyBonusZero = new PolicyBonus
+                            var policyBonusZeroPoint = new PolicyBonus
                             {
                                 PolicyNumber = jtem.PolicyNumber,
                                 BonusInPoints = 0
                             };
-                            lstPolicyBonuses.Add(policyBonusZero);
+
+                            lstPolicyBonuses.Add(policyBonusZeroPoint);
                         }
                     }
 
