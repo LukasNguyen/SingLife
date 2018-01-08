@@ -12,7 +12,7 @@ namespace SingLife.FacebookShareBonus.Model
     public interface IPolicySortService
     {
         /// <summary>
-        //// Sorts the specified policies.
+        /// Sorts the specified policies.
         /// </summary>
         /// <param name="policies">An enumerable of policies to be sorted.</param>
         /// <returns>An ordered enumerable of policies.</returns>

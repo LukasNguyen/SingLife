@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SingLife.FacebookShareBonus.Model.Tests.UT
 {
-    public class FacebookBonusCalculatorTests
+    public class FacebookBonusCalculatorTests2
     {
         [TestFixture]
         public class CalculateTests
@@ -132,9 +132,9 @@ namespace SingLife.FacebookShareBonus.Model.Tests.UT
             }
         }
 
-        private static FacebookBonusCalculator CreateCalculator()
+        private static FacebookBonusCalculator2 CreateCalculator()
         {
-            return new FacebookBonusCalculator();
+            return new FacebookBonusCalculator2();
         }
 
         private static FacebookBonusCalculationInput SampleInput(int maximumBonus)

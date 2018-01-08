@@ -16,62 +16,82 @@ namespace SingLife.FacebookShareBonus.Model
         /// <returns>A <see cref="FacebookBonus"/> object.</returns>
         public virtual FacebookBonus Calculate(FacebookBonusCalculationInput input)
         {
-            // TODO: Implement bonus calculation.
-
             var facebookBonusSetting = input.Settings;
-            var sumBonusInPoints = 0;
 
-            var lstPolicies = facebookBonusSetting.PolicySorter.Sort(input.PoliciesOfCustomer);
+            var sortedPolicies = facebookBonusSetting.PolicySorter.Sort(input.PoliciesOfCustomer);
 
-            var lstPolicyBonuses = new List<PolicyBonus>();
+            var policyBonuses = new List<PolicyBonus>();
 
             var count = 0;
+            var sumBonusInPoints = 0;
 
-            foreach (Policy item in lstPolicies)
+            foreach (Policy policy in sortedPolicies)
             {
+                var bonusInPoints = CalculateBonusInPoints(facebookBonusSetting, policy);
+
+                var policyBonus = AddNewPolicy(policyBonuses, policy, bonusInPoints);
+
                 count++;
-                var bonusInPoints = (float)item.Premium * facebookBonusSetting.BonusPercentage;
-                var bonusInPointsAfterFloor = (int)Math.Floor(bonusInPoints);
+                sumBonusInPoints += bonusInPoints;
 
-                sumBonusInPoints += bonusInPointsAfterFloor;
-
-                var policyBonus = new PolicyBonus
-                {
-                    PolicyNumber = item.PolicyNumber,
-                    BonusInPoints = bonusInPointsAfterFloor
-                };
-
-                lstPolicyBonuses.Add(policyBonus);
                 if (sumBonusInPoints > facebookBonusSetting.MaximumBonus)
                 {
-                    policyBonus.BonusInPoints -= (lstPolicyBonuses.Sum(n => n.BonusInPoints) - (int)facebookBonusSetting.MaximumBonus);
+                    CalculateBonusInPointsWhenSumBonusInPointsLargerThanMaximumBonus(facebookBonusSetting, policyBonuses, policyBonus);
 
-                    var remainingItems = lstPolicies.Skip(count);
+                    var remainingPolicies = sortedPolicies.Skip(count);
 
-                    if (remainingItems.Any())
-                    {
-                        foreach (Policy jtem in remainingItems)
-                        {
-                            var policyBonusZeroPoint = new PolicyBonus
-                            {
-                                PolicyNumber = jtem.PolicyNumber,
-                                BonusInPoints = 0
-                            };
-
-                            lstPolicyBonuses.Add(policyBonusZeroPoint);
-                        }
-                    }
+                    AssignZeroPointsForExceedPolicy(policyBonuses, remainingPolicies);
 
                     return new FacebookBonus
                     {
-                        PolicyBonuses = lstPolicyBonuses.ToArray()
+                        PolicyBonuses = policyBonuses.ToArray()
                     };
                 }
             }
             return new FacebookBonus
             {
-                PolicyBonuses = lstPolicyBonuses.ToArray()
+                PolicyBonuses = policyBonuses.ToArray()
             };
+        }
+
+        private static void CalculateBonusInPointsWhenSumBonusInPointsLargerThanMaximumBonus(FacebookBonusSettings facebookBonusSetting, List<PolicyBonus> policyBonuses, PolicyBonus policyBonus)
+        {
+            policyBonus.BonusInPoints -= (policyBonuses.Sum(n => n.BonusInPoints) - (int)facebookBonusSetting.MaximumBonus);
+        }
+
+        private static PolicyBonus AddNewPolicy(List<PolicyBonus> policyBonuses, Policy policy, int bonusInPointsAfterFloor)
+        {
+            var policyBonus = new PolicyBonus
+            {
+                PolicyNumber = policy.PolicyNumber,
+                BonusInPoints = bonusInPointsAfterFloor
+            };
+
+            policyBonuses.Add(policyBonus);
+            return policyBonus;
+        }
+
+        private static int CalculateBonusInPoints(FacebookBonusSettings facebookBonusSetting, Policy policy)
+        {
+            var bonusInPoints = (float)policy.Premium * facebookBonusSetting.BonusPercentage;
+            return (int)Math.Floor(bonusInPoints);
+        }
+
+        private static void AssignZeroPointsForExceedPolicy(List<PolicyBonus> policyBonuses, IEnumerable<Policy> remainingPolicies)
+        {
+            if (remainingPolicies.Any())
+            {
+                foreach (Policy remainingPolicy in remainingPolicies)
+                {
+                    var exceedPolicy = new PolicyBonus
+                    {
+                        PolicyNumber = remainingPolicy.PolicyNumber,
+                        BonusInPoints = 0
+                    };
+
+                    policyBonuses.Add(exceedPolicy);
+                }
+            }
         }
     }
 }
